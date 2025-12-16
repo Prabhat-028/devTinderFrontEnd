@@ -1,10 +1,26 @@
-export default function App() {
-	return (
+import NavBar from "./assets/NavBar";
+import Feed from "./assets/Feed";
+import { Routes, Route } from "react-router-dom";
+import Body from "./assets/Body";
+import Login from "./components/Login";
+import { BrowserRouter } from "react-router-dom";
+import SignUp from "./components/SignUp";
+
+
+const AppLayout = () => {
+    return (
         <>
-            <h1 className="bg-green-200 text-white font-bold underline p-4">
-                Tailwind is Working!
-            </h1>
-            <button className="btn btn-primary">Test Button</button>
+            <BrowserRouter >
+                <Routes>
+                    <Route path="/" element={<Body/>}>
+                        <Route path="/feed" element={<Feed />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/signUp" element={<SignUp/>}/>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
         </>
     );
-}
+};
+
+export default AppLayout;
