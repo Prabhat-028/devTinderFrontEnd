@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-	const [emailId, setEmailId] = useState("");
-	const [password, setPassword] = useState("");
+	const [emailId, setEmailId] = useState("gautam@gmail.com");
+	const [password, setPassword] = useState("Gautam@123");
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const [user,setUser] = useState("");
 	const handleClick = async () => {
 		try {
 			const res = await axios.post("http://localhost:1998/login", {
                 emailId,
                 password,
             });
-            console.log(res);
+			// console.log(res);
+			dispatch(addUser(res.data));
+			//adding the user
+			setUser(res.data);
+			//after login the user is successfully transfered to the / page
+			navigate("/");
 		}
 		catch (err) {
 			console.log(err);
@@ -40,16 +51,20 @@ const Login = () => {
                             type="password"
                             value={password}
                             placeholder="Password"
-							className="input input-bordered"
-							 onChange={(e) => setPassword(e.target.value)}
+                            className="input input-bordered"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
                     <div className="form-control mt-6">
-                        <button onClick={handleClick} className="btn btn-primary w-full">
+                        <button
+                            onClick={handleClick}
+                            className="btn btn-primary w-full"
+                        >
                             Login
                         </button>
                     </div>
+					{/* {!user ? <p>Invalid Credentials</p> : <p>Login Succesfull..Welcome ,{user.firstName}</p>} */}
                 </div>
             </div>
         </div>
