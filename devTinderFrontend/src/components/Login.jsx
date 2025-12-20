@@ -3,27 +3,30 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
 	const [emailId, setEmailId] = useState("gautam@gmail.com");
 	const [password, setPassword] = useState("Gautam@123");
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [user,setUser] = useState("");
+	const [error, setError] = useState("");
+	// const [user,setUser] = useState("");
 	const handleClick = async () => {
 		try {
 			const res = await axios.post("http://localhost:1998/login", {
                 emailId,
                 password,
-            });
+            },{withCredentials:true});
 			// console.log(res);
 			dispatch(addUser(res.data));
 			//adding the user
-			setUser(res.data);
+			// setUser(res.data);
 			//after login the user is successfully transfered to the / page
 			navigate("/");
 		}
 		catch (err) {
+			setError(err?.response?.data||"signUp First");
 			console.log(err);
 		}
 		
@@ -55,6 +58,7 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
+					<p className="bg-red-600">{error}</p>
 
                     <div className="form-control mt-6">
                         <button
@@ -64,7 +68,7 @@ const Login = () => {
                             Login
                         </button>
                     </div>
-					{/* {!user ? <p>Invalid Credentials</p> : <p>Login Succesfull..Welcome ,{user.firstName}</p>} */}
+                    {/* {!user ? <p>Invalid Credentials</p> : <p>Login Succesfull..Welcome ,{user.firstName}</p>} */}
                 </div>
             </div>
         </div>
