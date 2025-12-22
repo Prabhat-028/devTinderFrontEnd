@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import appstore from "./utils/appStore";
 import Profile from "./assets/Profile";
 import Feed from "./assets/Feed";
+import EditProfile from "./assets/EditProfile";
 
 const AppLayout = () => {
     return (
@@ -21,7 +22,8 @@ const AppLayout = () => {
                             <Route path="login" element={<Login />} />
 							<Route path="signUp" element={<SignUp />} />
 							<Route path="profile" element={<Profile />} />
-							<Route path="feed" element={<Feed/>}/>
+							<Route path="feed" element={<Feed />} />
+							<Route path="/profile/editProfile" element={<EditProfile/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>

@@ -1,8 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-    const user = useSelector((store) => store.user);
+	const user = useSelector((store) => store.user);
+	const navigate = useNavigate();
+	
+	const handleEditProfile = () => {
+		navigate("/profile/editProfile");
+	}
 
     if (!user) {
         return (
@@ -42,7 +48,7 @@ const Profile = () => {
                     </div>
 
                     <div className="card-actions mt-6">
-                        <button className="btn btn-primary btn-sm">
+                        <button onClick={handleEditProfile} className="btn btn-primary btn-sm">
                             Edit Profile
                         </button>
                     </div>
