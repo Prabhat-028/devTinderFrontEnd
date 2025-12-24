@@ -21,7 +21,7 @@ const AppLayout = () => {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Body />}>
-                            {/* <Route path="/" element={<Feed />} /> */}
+                           
                             <Route index element={<Feed />} />
                             <Route path="login" element={<Login />} />
                             <Route path="signUp" element={<SignUp />} />
@@ -39,7 +39,8 @@ const AppLayout = () => {
                                 path="/connection"
                                 element={<Connections />}
                             />
-                            <Route path="/request" element={<Request />} />
+							<Route path="/request" element={<Request />} />
+							
                         </Route>
                     </Routes>
                 </BrowserRouter>
