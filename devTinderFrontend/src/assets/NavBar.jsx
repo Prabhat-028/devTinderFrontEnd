@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL, DEFAULT_PROFILE_IMAGE } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 
 const NavBar = () => {
@@ -33,7 +33,7 @@ const NavBar = () => {
                                 <div className="w-10 rounded-full ">
                                     <img
                                         alt="Tailwind CSS Navbar component"
-                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                                        src={user.photoURL || DEFAULT_PROFILE_IMAGE}
                                     />
                                 </div>
                             </div>
@@ -43,9 +43,12 @@ const NavBar = () => {
                             >
                                 <li>
                                     <Link to="/profile" className="justify-between">Profile</Link>
-                                </li>
+								</li>
+								<li>
+									<Link to="/profile/editPassword" >UpdatePassword</Link>
+								</li>
                                 <li>
-                                    <a>Settings</a>
+                                    <Link to="/connection">connections</Link>
                                 </li>
                                 <li>
                                     <a onClick={handleLogOut}>Logout</a>

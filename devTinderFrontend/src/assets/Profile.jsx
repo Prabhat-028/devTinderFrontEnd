@@ -1,10 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { DEFAULT_PROFILE_IMAGE } from "../utils/constants";
 
 const Profile = () => {
 	const user = useSelector((store) => store.user);
 	const navigate = useNavigate();
+	const connections = useSelector((store) => store.connections);
 	
 	const handleEditProfile = () => {
 		navigate("/profile/editProfile");
@@ -24,8 +26,8 @@ const Profile = () => {
                 <div className="card-body items-center text-center">
                     <div className="avatar mb-4">
                         <div className="w-24 rounded-full">
-                            <img
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+							<img
+								src={user.photoURL|| DEFAULT_PROFILE_IMAGE}
                                 alt="Profile"
                             />
                         </div>
@@ -44,7 +46,8 @@ const Profile = () => {
                         </p>
                         <p>
                             <strong>Age:</strong> {user.age || "Not specified"}
-                        </p>
+						</p>
+						{connections && <p>{connections.length +" "}connections</p>}
                     </div>
 
                     <div className="card-actions mt-6">
