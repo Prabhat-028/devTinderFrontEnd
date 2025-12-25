@@ -27,14 +27,35 @@ const Feed = () => {
         feedData();
     }, []);
 
-    return (
-        <div className="ml-2 pt-2">
-            {feed.length === 0 && (
-                <p className="text-white text-center">Loading feed...</p>
-            )}
+    // ✅ AFTER hooks — conditional rendering
+    if (!feed) return null;
 
-            {feed.map((item) => (
-                <UserCard key={item._id} user={item} />
+    if (feed.length === 0) {
+        return (
+            <div className="h-screen flex items-center justify-center">
+                <p className="text-white text-lg">
+                    No user available at the moment
+                </p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="relative w-full h-screen flex justify-center items-center">
+            {feed.map((item, index) => (
+                <div
+                    key={item._id}
+                    className="absolute transition-all duration-300"
+                    style={{
+                        zIndex: feed.length - index,
+                        transform: `translateY(${index * 12}px) scale(${
+                            1 - index * 0.03
+                        })`,
+                        opacity: index > 3 ? 0 : 1, // sirf top 4 cards
+                    }}
+                >
+                    <UserCard user={item} />
+                </div>
             ))}
         </div>
     );

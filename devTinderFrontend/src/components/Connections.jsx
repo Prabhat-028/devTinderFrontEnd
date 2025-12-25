@@ -4,11 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
 import { addConnections } from "../utils/connectionSlice";
 import ConnectionCard from "./ConnectionCard";
+import { useNavigate } from "react-router-dom";
 
 const Connections = () => {
     const dispatch = useDispatch();
-    const connectionList = useSelector((store) => store.connections);
+	const connectionList = useSelector((store) => store.connections);
+	const navigate = useNavigate();
 
+	const handleConnection = () => {
+		navigate("/");
+	}
     const fetchConnections = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/user/connections`, {
@@ -38,7 +43,11 @@ const Connections = () => {
             {connectionList.length === 0 && (
                 <div className="flex justify-center">
                     <div className="alert alert-info max-w-md text-center shadow-md">
-                        <span>🤝 No connections yet. Start connecting!</span>
+                        <span>
+                            <button onClick={()=>handleConnection()}>
+                                🤝 No connections yet. Start connecting!
+                            </button>
+                        </span>
                     </div>
                 </div>
             )}
