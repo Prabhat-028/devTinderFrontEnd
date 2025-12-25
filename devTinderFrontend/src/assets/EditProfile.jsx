@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import Profile from "./Profile";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
     const user = useSelector((store) => store.user);
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -25,7 +27,7 @@ const EditProfile = () => {
             setSkills(user.skills || "");
             setPhotoURL(user.photoURL || "");
         }
-    }, [user]);
+    }, []);
 
     // ❗ payload SAME AS YOURS
     const payload = {
@@ -47,7 +49,9 @@ const EditProfile = () => {
                 { withCredentials: true }
             );
 			setError(res?.data?.message);
-            dispatch(addUser(res?.data?.data));
+			dispatch(addUser(res?.data?.data));
+			setTimeout(() => {navigate("/"); }, 1500);
+			
         } catch (err) {
             setError(err?.response?.data || "some fields are not mutable");
         }

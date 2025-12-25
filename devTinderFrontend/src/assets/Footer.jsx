@@ -10,18 +10,7 @@ const Footer = () => {
                     <p className="text-sm mt-1">Match. Build. Collaborate.</p>
                 </div>
 
-                {/* Links */}
-                <div className="flex gap-6 text-sm">
-                    <a href="/about" className="hover:text-white transition">
-                        About
-                    </a>
-                    <a href="/feed" className="hover:text-white transition">
-                        Discover
-                    </a>
-                    <a href="/login" className="hover:text-white transition">
-                        Login
-                    </a>
-                </div>
+            
 
                 {/* Copyright */}
                 <div className="text-xs text-gray-400">

@@ -1,51 +1,36 @@
-
-
-import { Routes, Route } from "react-router-dom";
-import Body from "./assets/Body";
-import Login from "./components/Login";
-import { BrowserRouter } from "react-router-dom";
-import SignUp from "./components/SignUp";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import appstore from "./utils/appStore";
-import Profile from "./assets/Profile";
+
+import Body from "./assets/Body";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 import Feed from "./assets/Feed";
-import EditProfile from "./assets/EditProfile";
-import UpdatePassword from "./assets/UpdatePassword";
+import Profile from "./assets/Profile";
 import Connections from "./components/Connections";
 import Request from "./components/Request";
+import EditProfile from "./assets/EditProfile";
 
 const AppLayout = () => {
     return (
-        <>
-            <Provider store={appstore}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Body />}>
-                           
-                            <Route index element={<Feed />} />
-                            <Route path="login" element={<Login />} />
-                            <Route path="signUp" element={<SignUp />} />
-                            <Route path="profile" element={<Profile />} />
-                            
-                            <Route
-                                path="/profile/editProfile"
-                                element={<EditProfile />}
-                            />
-                            <Route
-                                path="/profile/editPassword"
-                                element={<UpdatePassword />}
-                            />
-                            <Route
-                                path="/connection"
-                                element={<Connections />}
-                            />
-							<Route path="/request" element={<Request />} />
-							
-                        </Route>
-                    </Routes>
-                </BrowserRouter>
-            </Provider>
-        </>
+        <Provider store={appstore}>
+            <BrowserRouter>
+                <Routes>
+                    {/* PUBLIC */}
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/login" element={<Login />} />
+
+                    {/* APP (PRIVATE VIA BODY) */}
+                    <Route path="/" element={<Body />}>
+                        <Route index element={<Feed />} />
+                        <Route path="profile" element={<Profile />} />
+                        <Route path="connection" element={<Connections />} />
+						<Route path="request" element={<Request />} />
+						<Route path="profile/editProfile" element={<EditProfile/>}/>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </Provider>
     );
 };
 

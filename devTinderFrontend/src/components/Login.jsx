@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { loginSuccess } from "../utils/authSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-    const [emailId, setEmailId] = useState("gautam@gmail.com");
-    const [password, setPassword] = useState("Gautam@123");
+    const [emailId, setEmailId] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+	const handleSignUp = () => {
+		navigate("/signup");
+	}
 
     const handleClick = async () => {
         setLoading(true);
@@ -25,13 +29,19 @@ const Login = () => {
                 { withCredentials: true }
             );
 
-            dispatch(addUser(res.data));
+            const userData = res?.data?.data || res?.data;
+
+            dispatch(loginSuccess(userData)); // ✅ auth
+            dispatch(addUser(userData)); // ✅ user
             navigate("/");
         } catch (err) {
             const msg =
-                err?.response?.data?.message || err?.message || "Sign up first";
-
-            setError(msg);
+                err?.response?.data?.message || err?.message || "Login failed";
+			setTimeout(() => {
+				setError("");
+			}, 1500)
+			setError(msg);
+            
         } finally {
             setLoading(false);
         }
@@ -43,25 +53,21 @@ const Login = () => {
                 <div className="card-body">
                     <h2 className="card-title justify-center">Login</h2>
 
-                    <div className="form-control">
-                        <input
-                            type="email"
-                            value={emailId}
-                            placeholder="Email"
-                            className="input input-bordered"
-                            onChange={(e) => setEmailId(e.target.value)}
-                        />
-                    </div>
+                    <input
+                        type="email"
+                        value={emailId}
+                        placeholder="Email"
+                        className="input input-bordered"
+                        onChange={(e) => setEmailId(e.target.value)}
+                    />
 
-                    <div className="form-control mt-3">
-                        <input
-                            type="password"
-                            value={password}
-                            placeholder="Password"
-                            className="input input-bordered"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
+                    <input
+                        type="password"
+                        value={password}
+                        placeholder="Password"
+                        className="input input-bordered mt-3"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
 
                     {error && (
                         <p className="mt-3 rounded bg-red-600 p-2 text-center text-white">
@@ -69,15 +75,14 @@ const Login = () => {
                         </p>
                     )}
 
-                    <div className="form-control mt-6">
-                        <button
-                            onClick={handleClick}
-                            disabled={loading}
-                            className="btn btn-primary w-full"
-                        >
-                            {loading ? "Logging in..." : "Login"}
-                        </button>
-                    </div>
+                    <button
+                        onClick={handleClick}
+                        disabled={loading}
+                        className="btn btn-primary w-full mt-6"
+                    >
+                        {loading ? "Logging in..." : "Login"}
+					</button>
+					<p className="underline bg-red-500 cursor-pointer" onClick={()=>{handleSignUp()}}>Not an User?SignUp First</p>
                 </div>
             </div>
         </div>
