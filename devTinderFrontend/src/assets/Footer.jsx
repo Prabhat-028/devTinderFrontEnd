@@ -5,7 +5,7 @@ const Footer = () => {
                 {/* Logo / Name */}
                 <div className="text-center md:text-left">
                     <h2 className="text-xl font-bold text-white">
-                        DevTinder ❤️
+                        MeetWith.dev ❤️
                     </h2>
                     <p className="text-sm mt-1">Match. Build. Collaborate.</p>
                 </div>
