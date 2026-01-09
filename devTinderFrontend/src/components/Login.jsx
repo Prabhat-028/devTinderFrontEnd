@@ -14,9 +14,9 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-	const handleSignUp = () => {
-		navigate("/signup");
-	}
+    const handleSignUp = () => {
+        navigate("/signup");
+    };
 
     const handleClick = async () => {
         setLoading(true);
@@ -25,23 +25,24 @@ const Login = () => {
         try {
             const res = await axios.post(
                 `${BASE_URL}/login`,
-                { emailId, password },
+                {
+                    emailId: emailId.trim().toLowerCase(),
+                    password,
+                },
                 { withCredentials: true }
             );
 
-            const userData = res?.data?.data || res?.data;
+            const userData = res.data;
 
-            dispatch(loginSuccess(userData)); // ✅ auth
-            dispatch(addUser(userData)); // ✅ user
+            dispatch(loginSuccess(userData));
+            dispatch(addUser(userData));
+
             navigate("/");
         } catch (err) {
-            const msg =
-                err?.response?.data?.message || err?.message || "Login failed";
-			setTimeout(() => {
-				setError("");
-			}, 1500)
-			setError(msg);
-            
+            const msg = err?.response?.data?.message || "Invalid credentials";
+            setError(msg);
+
+            setTimeout(() => setError(""), 1500);
         } finally {
             setLoading(false);
         }
@@ -81,8 +82,15 @@ const Login = () => {
                         className="btn btn-primary w-full mt-6"
                     >
                         {loading ? "Logging in..." : "Login"}
-					</button>
-					<p className="underline bg-red-500 cursor-pointer" onClick={()=>{handleSignUp()}}>Not an User?SignUp First</p>
+                    </button>
+                    <p
+                        className="underline bg-red-500 cursor-pointer"
+                        onClick={() => {
+                            handleSignUp();
+                        }}
+                    >
+                        Not an User?SignUp First
+                    </p>
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import Profile from "./assets/Profile";
 import Connections from "./components/Connections";
 import Request from "./components/Request";
 import EditProfile from "./assets/EditProfile";
+import Chat from "./components/Chat";
 
 const AppLayout = () => {
     return (
@@ -26,7 +27,8 @@ const AppLayout = () => {
                         <Route path="profile" element={<Profile />} />
                         <Route path="connection" element={<Connections />} />
 						<Route path="request" element={<Request />} />
-						<Route path="profile/editProfile" element={<EditProfile/>}/>
+						<Route path="profile/editProfile" element={<EditProfile />} />
+						<Route path="/chat/:targetUserId" element={<Chat/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

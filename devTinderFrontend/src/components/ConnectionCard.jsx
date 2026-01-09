@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ConnectionCard = ({ user }) => {
     return (
@@ -50,9 +51,11 @@ const ConnectionCard = ({ user }) => {
 
                 {/* Action */}
                 <div>
-                    <button className="btn btn-sm btn-primary btn-outline">
-                        View
-                    </button>
+                    <Link to={"/chat/" + user._id}>
+                        <button className="btn btn-sm btn-primary btn-outline">
+                            Chat
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
